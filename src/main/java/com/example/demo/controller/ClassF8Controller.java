@@ -10,7 +10,7 @@ public class ClassF8Controller {
 
     @GetMapping("/form-entry")
     public String doGetFormEntry(){
-        return "FormClassF8";
+        return "layout/FormClassF8";
     }
 
 }
