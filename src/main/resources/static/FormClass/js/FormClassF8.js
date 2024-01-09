@@ -1,4 +1,4 @@
-class FormClassF8{
+class FormClassF8 {
     listUserIn4 = [
         {userId: 1, firstName: 'Như Quỳnh', lastName:'Phạm', major:'Dev lỏd' },
         {userId: 2, firstName: 'Hữu Thức', lastName:'Huỳnh', major:'Dev lỏd' },
@@ -15,16 +15,19 @@ class FormClassF8{
         {userId: 14, firstName: 'Trường Huy', lastName:'Nguyễn', major:'Test lỏd' }
     ];
 
+    listUserIn4v2 = [];
+
     loadInit = () => {
         this.importJsSuccess();
-        this.createTableListUser();
+        // this.createTableListUser(this.listUserIn4v2);
+        this.getDataUserIn4();
     }
     importJsSuccess = () =>{
         console.log("Import Js Class F8 Success");
     };
-    createTableListUser = () =>{
+    createTableListUser = (listUserInformation) =>{
         let tbodyContentString = '';
-        this.listUserIn4.forEach(e=>{
+        listUserInformation.forEach(e=>{
             tbodyContentString += '<tr>'+
                                     `<th scope="row">${e.userId}</th>`+
                                     `<td>${e.firstName}</td>`+
@@ -101,6 +104,47 @@ class FormClassF8{
             return false;
         }
         return true;
+    }
+
+    // Call Api by Ajax of Jquery
+    getDataUserIn4 = () => {
+        $.ajax({
+            type: 'GET',
+            url: '/api/v1/users',
+            contentType:'application/json',
+            success: function(data) {
+                console.log("Call Api /api/v1/users Success");
+                this.formatDataFromBEToFE(data);
+            }.bind(this),
+            error: function(error) {
+                console.log("Call Api /api/v1/users Fail");}
+        }, {})
+    };
+
+    formatDataFromBEToFE = (dataBE) => {
+        console.log('function Format Data From BE to FE ');
+        //Case1: low level
+           /* let listResultAfterFormatDataFromBackEndToFrontEnd = [];
+            for(let i = 0 ; i < dataBE.length ; i++){
+                let objectConverted = {
+                    "userId": dataBE[i].userId,
+                    "firstName": dataBE[i].userName,
+                    "lastName": 'NULL',
+                    "major": dataBE[i].description
+                };
+                listResultAfterFormatDataFromBackEndToFrontEnd.push(objectConverted);
+            };
+            */
+        //Case2: high level
+        let listResultAfterFormatDataFromBackEndToFrontEnd = dataBE.map(function (e){
+                return {
+                    "userId": e.userId,
+                    "firstName": e.userName,
+                    "lastName": 'NULL',
+                    "major": e.description
+                }
+        });
+        this.createTableListUser(listResultAfterFormatDataFromBackEndToFrontEnd);
     }
 }
 
