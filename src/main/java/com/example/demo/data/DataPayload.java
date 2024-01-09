@@ -11,9 +11,9 @@ public class DataPayload {
 
     public List<User> getAllUsers(){
         return Arrays.asList(
-                User.builder().userId(1).userName("ha huy tri").age(22).description("desciption").build(),
-                User.builder().userId(2).userName("huynh huu thuc").age(22).description("desciption").build(),
-                User.builder().userId(3).userName("pham nhu quynh").age(22).description("desciption").build()
+                User.builder().userId(1).userName("Hà Huy Trí").age(22).description("DevOps").build(),
+                User.builder().userId(2).userName("Huỳnh Hữu Thức").age(22).description("Tester").build(),
+                User.builder().userId(3).userName("Phạm Như Quỳnh").age(22).description("Developer").build()
         );
     }
 
